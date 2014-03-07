@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ant-project>
+<project name="wantfast" basedir="." default="dist">
+	<description>
+		wantfast: batteries-included demo to experiment with going fast, research how fast is fast, and see how convenient fast is to be.
+	</description>
+	<property name="app" value="${ant.project.name}"/>
+
+
+	<import file="lib/exus-build/build-exultant.xml"/>
+	<import file="lib/exus-build/build-exultant-java.xml"/>
+
+
+	<target name="init" depends="exusInit">
+	</target>
+
+
+	<path id="app.path.deps.main" cache="true">
+		<!-- none -->
+	</path>
+	<path id="app.path.main">
+		<path refid="app.path.deps.main" />
+		<pathelement location="${target.javac}/main" />
+	</path>
+	<path id="app.path.deps.test">
+		<path refid="app.path.main" />
+		<pathelement location="${lib}/junit/junit.jar"/>
+		<pathelement location="${target.javac}/test-fixtures" />
+	</path>
+	<path id="app.path.test">
+		<path refid="app.path.deps.test" />
+		<pathelement location="${target.javac}/test-unit" />
+		<pathelement location="${target.javac}/test-integration" />
+	</path>
+
+
+	<target name="compile"
+		depends="init"
+		description="compile the source"
+		>
+		<exusJavac
+			classes="us/exultant/wantfast/Wantfast.java"
+			>
+			<classpath refid="app.path.deps.main" />
+		</exusJavac>
+	</target>
+
+
+	<target name="dist"
+		depends="compile"
+		description="pack distributable artifacts"
+		>
+		<exusPack destfile="${dist}/${app}.jar">
+			<manifest>
+				<attribute name="Main-Class" value="us.exultant.wantfast.Wantfast"/>
+			</manifest>
+			<fileset file="${target.javac}/main/**"/>
+		</exusPack>
+		<chmod file="${dist}/${app}.jar" perm="755"/>
+	</target>
+
+
+	<target name="clean"
+		description="clean up">
+		<delete dir="${target}"/>
+	</target>
+
+
+	<target name="compile-test"
+		depends="compile"
+		>
+		<exusJavac
+			tree="test-fixtures"
+			depends="${toString:app.path.deps.test}"
+		/>
+		<exusJavac
+			tree="test-unit"
+			depends="${toString:app.path.deps.test}"
+		/>
+		<exusJavac
+			tree="test-integration"
+			depends="${toString:app.path.deps.test}"
+		/>
+	</target>
+
+
+	<target name="run-test"
+		depends="compile, compile-test"
+		description="runs junit tests"
+		>
+		<property name="test.dir" value="${java.io.tmpdir}/${app}-test"/>
+		<mkdir dir="${test.dir}"/>
+		<junit printsummary="off" haltonfailure="yes" dir="${test.dir}" newenvironment="true">
+			<formatter type="plain" usefile="false" />
+			<classpath refid="app.path.test"/>
+			<batchtest fork="yes">
+				<fileset dir="${target.javac}/test-unit">
+					<include name="**/*Test*.class"/>
+				</fileset>
+				<fileset dir="${target.javac}/test-integration">
+					<include name="**/*Test*.class"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+</project>
