@@ -15,22 +15,35 @@
 	</target>
 
 
-	<path id="app.path.deps.main" cache="true">
-		<!-- none -->
+	<path id="app.path.deps.main.compile" cache="true">
+		<pathelement location="${lib}/log4j-api/log4j-api.jar"/>
 	</path>
-	<path id="app.path.main">
-		<path refid="app.path.deps.main" />
+	<path id="app.path.deps.main.runtime" cache="true">
+		<pathelement location="${lib}/log4j-core/log4j-core.jar"/>
+	</path>
+	<path id="app.path.main.compile" cache="true">
+		<path refid="app.path.deps.main.compile" />
 		<pathelement location="${target.javac}/main" />
 	</path>
-	<path id="app.path.deps.test">
-		<path refid="app.path.main" />
+	<path id="app.path.main.runtime" cache="true">
+		<path refid="app.path.main.compile" />
+		<path refid="app.path.deps.main.runtime" />
+	</path>
+	<path id="app.path.deps.test.compile" cache="true">
+		<path refid="app.path.main.compile" />
 		<pathelement location="${lib}/junit/junit.jar"/>
 		<pathelement location="${target.javac}/test-fixtures" />
 	</path>
-	<path id="app.path.test">
-		<path refid="app.path.deps.test" />
+	<path id="app.path.deps.test.runtime" cache="true">
+	</path>
+	<path id="app.path.test.compile" cache="true">
+		<path refid="app.path.deps.test.compile" />
 		<pathelement location="${target.javac}/test-unit" />
 		<pathelement location="${target.javac}/test-integration" />
+	</path>
+	<path id="app.path.test.runtime" cache="true">
+		<path refid="app.path.test.compile" />
+		<path refid="app.path.deps.test.runtime" />
 	</path>
 
 
@@ -41,8 +54,20 @@
 		<exusJavac
 			classes="us/exultant/wantfast/Wantfast.java"
 			>
-			<classpath refid="app.path.deps.main" />
+			<classpath refid="app.path.deps.main.compile" />
 		</exusJavac>
+	</target>
+
+
+	<target name="run"
+		depends="compile"
+		description="run the project"
+		>
+		<java
+			classname="us.exultant.wantfast.Wantfast"
+			>
+			<classpath refid="app.path.main.runtime"/>
+		</java>
 	</target>
 
 
@@ -71,15 +96,15 @@
 		>
 		<exusJavac
 			tree="test-fixtures"
-			depends="${toString:app.path.deps.test}"
+			depends="${toString:app.path.deps.test.compile}"
 		/>
 		<exusJavac
 			tree="test-unit"
-			depends="${toString:app.path.deps.test}"
+			depends="${toString:app.path.deps.test.compile}"
 		/>
 		<exusJavac
 			tree="test-integration"
-			depends="${toString:app.path.deps.test}"
+			depends="${toString:app.path.deps.test.compile}"
 		/>
 	</target>
 
@@ -92,7 +117,7 @@
 		<mkdir dir="${test.dir}"/>
 		<junit printsummary="off" haltonfailure="yes" dir="${test.dir}" newenvironment="true">
 			<formatter type="plain" usefile="false" />
-			<classpath refid="app.path.test"/>
+			<classpath refid="app.path.test.runtime"/>
 			<batchtest fork="yes">
 				<fileset dir="${target.javac}/test-unit">
 					<include name="**/*Test*.class"/>
