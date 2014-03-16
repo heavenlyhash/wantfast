@@ -6,9 +6,9 @@
 	<classpathentry kind="src" path="src/test-unit"/>
 	<classpathentry kind="src" path="src/conf"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/log4j-api/log4j-api.jar"/>
-	<classpathentry kind="lib" path="lib/junit/junit.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-core/log4j-core.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api/log4j-api.jar" sourcepath="lib/log4j-api/log4j-api-sources.jar"/>
+	<classpathentry kind="lib" path="lib/junit/junit.jar" sourcepath="lib/junit/junit-sources.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core/log4j-core.jar" sourcepath="lib/log4j-core/log4j-core-sources.jar"/>
 	<classpathentry kind="lib" path="lib/netty/netty-all.jar" sourcepath="lib/netty/netty-all-sources.jar"/>
 	<classpathentry kind="output" path="target/eclipse"/>
 </classpath>
