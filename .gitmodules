@@ -1,3 +1,9 @@
 [submodule "lib/exus-build"]
 	path = lib/exus-build
 	url = https://github.com/heavenlyhash/exus-build.git
+[submodule "lib/junit"]
+	path = lib/junit
+	url = http://mdm-releases.com/junit/junit-releases.git
+	mdm = dependency
+	mdm-version = 4.10.mvn
+	update = none
