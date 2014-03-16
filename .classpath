@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/junit/junit.jar" sourcepath="lib/junit/junit-sources.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-core/log4j-core.jar" sourcepath="lib/log4j-core/log4j-core-sources.jar"/>
 	<classpathentry kind="lib" path="lib/netty/netty-all.jar" sourcepath="lib/netty/netty-all-sources.jar"/>
+	<classpathentry kind="lib" path="lib/quasar-core/quasar-core.jar" sourcepath="lib/quasar-core/quasar-core-sources.jar"/>
 	<classpathentry kind="output" path="target/eclipse"/>
 </classpath>
