@@ -19,3 +19,9 @@
 	mdm = dependency
 	mdm-version = 2.0-rc1.mvn
 	update = none
+[submodule "lib/netty"]
+	path = lib/netty
+	url = http://mdm-releases.com/io.netty/netty-all-releases.git
+	mdm = dependency
+	mdm-version = 5.0.0.Alpha1.mvn
+	update = none
