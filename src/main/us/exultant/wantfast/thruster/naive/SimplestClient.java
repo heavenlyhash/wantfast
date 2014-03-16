@@ -2,8 +2,10 @@ package us.exultant.wantfast.thruster.naive;
 
 import java.io.*;
 import java.net.*;
+import org.apache.logging.log4j.*;
 
 public class SimplestClient {
+	public static final Logger log = LogManager.getLogger(SimplestClient.class);
 
 	Socket sock;
 	PrintWriter out;
@@ -18,7 +20,7 @@ public class SimplestClient {
 
 	public String ping() throws IOException {
 		out.println("{\"ping\":\"ping\"}");
-		System.out.println("(wrote ping to connection on client)");
+		log.info("wrote ping to connection on client");
 		return in.readLine();
 	}
 }
