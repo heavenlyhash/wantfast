@@ -7,3 +7,9 @@
 	mdm = dependency
 	mdm-version = 4.10.mvn
 	update = none
+[submodule "lib/log4j-core"]
+	path = lib/log4j-core
+	url = http://mdm-releases.com/org.apache.logging.log4j/log4j-core-releases.git
+	mdm = dependency
+	mdm-version = 2.0-rc1.mvn
+	update = none
