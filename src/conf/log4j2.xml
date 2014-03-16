@@ -2,7 +2,7 @@
 <Configuration status="WARN">
 	<Appenders>
 		<Console name="stderr" target="SYSTEM_ERR">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level [ %10thread ] %-58logger - %msg%n"/>
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level [ %10thread ] %-42logger{2.2.2.999} - %msg%n"/>
 		</Console>
 	</Appenders>
 	<Loggers>
