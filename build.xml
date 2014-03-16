@@ -28,6 +28,7 @@
 	<path id="app.path.main.runtime" cache="true">
 		<path refid="app.path.main.compile" />
 		<path refid="app.path.deps.main.runtime" />
+		<pathelement location="${src}/conf/"/>
 	</path>
 	<path id="app.path.deps.test.compile" cache="true">
 		<path refid="app.path.main.compile" />
