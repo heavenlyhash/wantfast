@@ -3,15 +3,23 @@ package us.exultant.wantfast.thruster.naive;
 import java.io.*;
 import java.net.*;
 import org.apache.logging.log4j.*;
+import us.exultant.wantfast.*;
 
-public class SimplestServer {
+public class SimplestServer implements us.exultant.wantfast.thruster.api.Server {
 	public static final Logger log = LogManager.getLogger(SimplestServer.class);
+
+	@Override
+	public void configure(ThrusterConfig cfg) {
+		port = cfg.get(ThrusterConfig.Options.PORT);
+	}
+
+	private int port;
 
 	ServerSocket sock;
 
-	public SimplestServer connect() throws IOException {
-		sock = new ServerSocket(10010);
-		return this;
+	@Override
+	public void connect() throws IOException {
+		sock = new ServerSocket(port);
 	}
 
 
