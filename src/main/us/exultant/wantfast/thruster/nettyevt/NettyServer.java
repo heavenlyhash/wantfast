@@ -8,7 +8,7 @@ import io.netty.channel.socket.*;
 import io.netty.channel.socket.nio.*;
 import us.exultant.wantfast.*;
 
-public class Server implements us.exultant.wantfast.thruster.api.Server {
+public class NettyServer implements us.exultant.wantfast.thruster.api.Server {
 	@Override
 	public void configure(ThrusterConfig cfg) {
 		port = cfg.get(ThrusterConfig.Options.PORT);

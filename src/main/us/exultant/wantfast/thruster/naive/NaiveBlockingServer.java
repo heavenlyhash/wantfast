@@ -5,8 +5,8 @@ import java.net.*;
 import org.apache.logging.log4j.*;
 import us.exultant.wantfast.*;
 
-public class SimplestServer implements us.exultant.wantfast.thruster.api.Server {
-	public static final Logger log = LogManager.getLogger(SimplestServer.class);
+public class NaiveBlockingServer implements us.exultant.wantfast.thruster.api.Server {
+	public static final Logger log = LogManager.getLogger(NaiveBlockingServer.class);
 
 	@Override
 	public void configure(ThrusterConfig cfg) {
@@ -23,7 +23,7 @@ public class SimplestServer implements us.exultant.wantfast.thruster.api.Server 
 	}
 
 
-	public SimplestServer serve() {
+	public NaiveBlockingServer serve() {
 		Thread t = new Thread() {
 			public void run() {
 				while (true) {

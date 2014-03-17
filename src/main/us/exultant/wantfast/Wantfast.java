@@ -14,14 +14,14 @@ public class Wantfast {
 		ThrusterConfig cfg = new ThrusterConfig();
 		cfg.put(ThrusterConfig.Options.PORT, 10010);
 
-		Server server = new SimplestServer();
+		Server server = new NaiveBlockingServer();
 		server.configure(cfg);
 		server.connect();
-		((SimplestServer)server).serve();
+		((NaiveBlockingServer)server).serve();
 
-		Client client = new SimplestClient();
+		Client client = new NaiveBlockingClient();
 		client.configure(cfg);
 		client.connect();
-		log.info(((SimplestClient)client).ping());
+		log.info(((NaiveBlockingClient)client).ping());
 	}
 }
