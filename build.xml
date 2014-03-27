@@ -15,8 +15,18 @@
 	</target>
 
 
+	<path id="app.path.deps.quasar" cache="true">
+		<pathelement location="${lib}/quasar-core/quasar-core.jar"/>
+		<pathelement location="${lib}/asm/asm.jar"/>
+		<pathelement location="${lib}/asm-util/asm-util.jar"/>
+		<pathelement location="${lib}/asm-tree/asm-tree.jar"/>
+		<pathelement location="${lib}/asm-analysis/asm-analysis.jar"/>
+		<pathelement location="${lib}/asm-commons/asm-commons.jar"/>
+	</path>
 	<path id="app.path.deps.main.compile" cache="true">
 		<pathelement location="${lib}/log4j-api/log4j-api.jar"/>
+		<pathelement location="${lib}/quasar-core/quasar-core.jar"/>
+		<pathelement location="${lib}/guava/guava.jar"/>
 	</path>
 	<path id="app.path.deps.main.runtime" cache="true">
 		<pathelement location="${lib}/log4j-core/log4j-core.jar"/>
@@ -57,6 +67,15 @@
 			>
 			<classpath refid="app.path.deps.main.compile" />
 		</exusJavac>
+
+		<taskdef name="quasar-instrument"
+			classname="co.paralleluniverse.fibers.instrument.InstrumentationTask">
+			<classpath refid="app.path.deps.quasar" />
+		</taskdef>
+
+		<quasar-instrument verbose="true" check="true" debug="true">
+			<fileset dir="${target.javac}" />
+		</quasar-instrument>
 	</target>
 
 
