@@ -37,3 +37,9 @@
 	mdm = dependency
 	mdm-version = 0.4.0.mvn
 	update = none
+[submodule "lib/asm"]
+	path = lib/asm
+	url = http://mdm-releases.com/org.ow2.asm/asm-releases.git
+	mdm = dependency
+	mdm-version = 4.2.mvn
+	update = none
