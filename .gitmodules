@@ -61,3 +61,9 @@
 	mdm = dependency
 	mdm-version = 4.2.mvn
 	update = none
+[submodule "lib/guava"]
+	path = lib/guava
+	url = http://mdm-releases.com/com.google.guava/guava-releases.git
+	mdm = dependency
+	mdm-version = 15.0.mvn
+	update = none
