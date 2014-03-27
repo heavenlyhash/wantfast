@@ -67,3 +67,9 @@
 	mdm = dependency
 	mdm-version = 15.0.mvn
 	update = none
+[submodule "lib/asm-tree"]
+	path = lib/asm-tree
+	url = http://mdm-releases.com/org.ow2.asm/asm-tree-releases.git
+	mdm = dependency
+	mdm-version = 4.2.mvn
+	update = none
