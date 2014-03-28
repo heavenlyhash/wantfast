@@ -1,12 +1,11 @@
 package us.exultant.wantfast.thruster.quasar;
 
-import static java.nio.file.StandardOpenOption.*;
 import java.io.*;
 import java.net.*;
 import java.nio.*;
 import java.nio.charset.*;
-import java.nio.file.*;
 import java.util.*;
+import java.util.concurrent.*;
 import co.paralleluniverse.fibers.*;
 import co.paralleluniverse.fibers.io.*;
 import co.paralleluniverse.strands.*;
@@ -64,11 +63,16 @@ public class QuasarServer {
 					if (n != 4) {
 						throw new Error("damnit, quasar, what did i hire you for (server writing header)");
 					}
-					n = ch.write(msgBuf);
-					if (n != msgLen) {
-						throw new Error("damnit, quasar, what did i hire you for (server writing body)");
-					}
-				} catch (IOException e) {
+					msgBuf.limit(2);
+					ch.write(msgBuf);
+
+					Strand.sleep(500);
+					msgBuf.limit(4);
+					ch.write(msgBuf);
+//					if (n != msgLen) {
+//						throw new Error("damnit, quasar, what did i hire you for (server writing body)");
+//					}
+				} catch (IOException | InterruptedException e) {
 					throw new RuntimeException(e);
 				}
 			}
