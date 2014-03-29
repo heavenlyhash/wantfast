@@ -35,7 +35,7 @@
 	path = lib/quasar-actors
 	url = http://mdm-releases.com/co.paralleluniverse/quasar-actors-releases.git
 	mdm = dependency
-	mdm-version = 0.4.0.mvn
+	mdm-version = 0.5.0.mvn
 	update = none
 [submodule "lib/asm"]
 	path = lib/asm
