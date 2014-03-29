@@ -29,7 +29,7 @@
 	path = lib/quasar-core
 	url = http://mdm-releases.com/co.paralleluniverse/quasar-core-releases.git
 	mdm = dependency
-	mdm-version = 0.4.0.mvn
+	mdm-version = 0.5.0.mvn
 	update = none
 [submodule "lib/quasar-actors"]
 	path = lib/quasar-actors
