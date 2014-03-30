@@ -42,8 +42,10 @@ public class QuasarServer implements Server {
 			public void run() throws SuspendExecution {
 				try (
 					FiberServerSocketChannel socket = FiberServerSocketChannel.open().bind(new InetSocketAddress(port));
-					FiberSocketChannel ch = socket.accept();
+					FiberSocketChannel ch1 = socket.accept();
 				) {
+					PatientFiberSocketChannel ch = new PatientFiberSocketChannel(ch1);
+
 					ByteBuffer headerBuf = ByteBuffer.allocateDirect(4);
 					ByteBuffer msgBuf = ByteBuffer.allocateDirect(1024 * 1024);
 

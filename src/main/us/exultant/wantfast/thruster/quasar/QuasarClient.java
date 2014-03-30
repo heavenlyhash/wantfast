@@ -36,7 +36,9 @@ public class QuasarClient implements us.exultant.wantfast.thruster.api.Client {
 		fiber = new Fiber<Void>(scheduler, new SuspendableRunnable() {
 			@Override
 			public void run() throws SuspendExecution {
-				try (FiberSocketChannel ch = FiberSocketChannel.open(new InetSocketAddress(port))) {
+				try (FiberSocketChannel ch1 = FiberSocketChannel.open(new InetSocketAddress(port))) {
+					PatientFiberSocketChannel ch = new PatientFiberSocketChannel(ch1);
+
 					ByteBuffer headerBuf = ByteBuffer.allocateDirect(4);
 					ByteBuffer msgBuf = ByteBuffer.allocateDirect(1024 * 1024);
 
