@@ -29,6 +29,7 @@
 		<pathelement location="${lib}/guava/guava.jar"/>
 	</path>
 	<path id="app.path.deps.main.runtime" cache="true">
+		<path refid="app.path.deps.quasar" /> <!-- only for using the instrumentation verifier -->
 		<pathelement location="${lib}/log4j-core/log4j-core.jar"/>
 	</path>
 	<path id="app.path.main.compile" cache="true">
@@ -86,6 +87,7 @@
 		<java
 			classname="us.exultant.wantfast.Wantfast"
 			>
+			<sysproperty key="co.paralleluniverse.fibers.verifyInstrumentation" value="true" />
 			<classpath refid="app.path.main.runtime"/>
 		</java>
 	</target>
