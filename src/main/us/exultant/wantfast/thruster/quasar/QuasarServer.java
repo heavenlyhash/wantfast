@@ -3,7 +3,6 @@ package us.exultant.wantfast.thruster.quasar;
 import java.io.*;
 import java.net.*;
 import java.nio.*;
-import java.nio.charset.*;
 import co.paralleluniverse.fibers.*;
 import co.paralleluniverse.fibers.io.*;
 import co.paralleluniverse.strands.*;
@@ -15,13 +14,9 @@ public class QuasarServer {
 	// https://github.com/puniverse/quasar/blob/master/quasar-core/src/test/java/co/paralleluniverse/fibers/io/FiberAsyncIOTest.java
 	// https://github.com/puniverse/quasar/blob/master/quasar-core/src/test/java/co/paralleluniverse/strands/StrandsBenchmark.java
 
-	FiberServerSocketChannel sock;
 	FiberScheduler scheduler = new FiberForkJoinScheduler("test", 4, null, false);
 
 	private static final int PORT = 1234;
-	private static final Charset charset = Charset.forName("UTF-8");
-	private static final CharsetEncoder encoder = charset.newEncoder();
-	private static final CharsetDecoder decoder = charset.newDecoder();
 
 	public static void main(String... args) throws Exception {
 		new QuasarServer().testFiberAsyncSocket();
