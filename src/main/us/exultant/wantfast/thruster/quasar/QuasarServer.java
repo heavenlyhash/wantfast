@@ -4,8 +4,6 @@ import java.io.*;
 import java.net.*;
 import java.nio.*;
 import java.nio.charset.*;
-import java.util.*;
-import java.util.concurrent.*;
 import co.paralleluniverse.fibers.*;
 import co.paralleluniverse.fibers.io.*;
 import co.paralleluniverse.strands.*;
@@ -78,63 +76,11 @@ public class QuasarServer {
 			}
 		});
 
-		final Fiber<Void> client = new Fiber<Void>(scheduler, new SuspendableRunnable() {
-			@Override
-			public void run() throws SuspendExecution {
-				try (FiberSocketChannel ch = FiberSocketChannel.open(new InetSocketAddress(PORT))) {
-					ByteBuffer headerBuf = ByteBuffer.allocateDirect(4);
-					ByteBuffer msgBuf = ByteBuffer.allocateDirect(1024 * 1024);
-
-					byte[] msg = new byte[] { 0x63, 0x63, 0x63, 0x64, };
-					int msgLen = msg.length;
-
-					headerBuf.clear();
-					headerBuf.putInt(msgLen);
-					headerBuf.flip();
-					int n = ch.write(headerBuf);
-					if (n != 4) {
-						throw new Error("damnit, quasar, what did i hire you for (client writing header)");
-					}
-					msgBuf.clear();
-					msgBuf.put(msg);
-					msgBuf.flip();
-					n = ch.write(msgBuf);
-					if (n != msgLen) {
-						throw new Error("damnit, quasar, what did i hire you for (client writing body)");
-					}
-
-
-					headerBuf.clear();
-					n = ch.read(headerBuf);
-					if (n != 4) {
-						throw new Error("damnit, quasar, what did i hire you for (client reading header)");
-					}
-					headerBuf.flip();
-					msgLen = headerBuf.getInt();
-
-					msgBuf.clear();
-					msgBuf.limit(msgLen);
-					long n2 = ch.read(msgBuf);
-					if (n2 != msgLen) {
-						throw new Error("damnit, quasar, what did i hire you for (client reading body)");
-					}
-					msgBuf.flip();
-
-					if (msgLen != msg.length)
-						throw new Error("damnit, quasar: expected echo msglen "+msg.length+", got "+msgLen);
-					byte[] msg2 = new byte[msgLen];
-					msgBuf.get(msg2);
-					if (!Arrays.equals(msg, msg2))
-						throw new Error("damnit, quasar: expected echo message equality, wanted "+Arrays.toString(msg)+", got "+Arrays.toString(msg2));
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			}
-		});
+		final QuasarClient client = new QuasarClient(scheduler);
 
 		server.start();
 		Thread.sleep(100);
-		client.start();
+		client.ping();
 
 		client.join();
 		server.join();
