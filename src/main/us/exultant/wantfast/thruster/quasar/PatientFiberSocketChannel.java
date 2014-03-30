@@ -5,6 +5,7 @@ import java.net.*;
 import java.nio.*;
 import java.nio.channels.*;
 import java.util.*;
+import co.paralleluniverse.fibers.*;
 import co.paralleluniverse.fibers.io.*;
 
 /**
@@ -23,6 +24,7 @@ public class PatientFiberSocketChannel implements ByteChannel, ScatteringByteCha
 
 	private FiberSocketChannel proxy;
 
+	@Suspendable
 	public int read(ByteBuffer dst) throws IOException {
 		int n = 0;
 		while (dst.remaining() > 0) {
@@ -35,10 +37,9 @@ public class PatientFiberSocketChannel implements ByteChannel, ScatteringByteCha
 		return n;
 	}
 
+	@Suspendable
 	public int write(ByteBuffer src) throws IOException {
 		int n = 0;
-		System.out.println("seriously not a null 1: "+src);
-		System.out.println("seriously not a null 2: "+proxy);
 		while (src.remaining() > 0) {
 			n += proxy.write(src);
 		}
@@ -73,6 +74,7 @@ public class PatientFiberSocketChannel implements ByteChannel, ScatteringByteCha
 		return proxy.supportedOptions();
 	}
 
+	@Suspendable
 	public long write(ByteBuffer[] srcs, int offset, int length) throws IOException {
 		long n = 0;
 		ByteBuffer last = srcs[srcs.length-1];
@@ -82,6 +84,7 @@ public class PatientFiberSocketChannel implements ByteChannel, ScatteringByteCha
 		return n;
 	}
 
+	@Suspendable
 	public long write(ByteBuffer[] srcs) throws IOException {
 		long n = 0;
 		ByteBuffer last = srcs[srcs.length-1];
@@ -91,6 +94,7 @@ public class PatientFiberSocketChannel implements ByteChannel, ScatteringByteCha
 		return n;
 	}
 
+	@Suspendable
 	public long read(ByteBuffer[] dsts, int offset, int length) throws IOException {
 		int n = 0;
 		ByteBuffer last = dsts[dsts.length-1];
@@ -104,6 +108,7 @@ public class PatientFiberSocketChannel implements ByteChannel, ScatteringByteCha
 		return n;
 	}
 
+	@Suspendable
 	public long read(ByteBuffer[] dsts) throws IOException {
 		int n = 0;
 		ByteBuffer last = dsts[dsts.length-1];
