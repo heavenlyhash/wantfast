@@ -3,32 +3,46 @@ package us.exultant.wantfast.thruster.quasar;
 import java.io.*;
 import java.net.*;
 import java.nio.*;
+import java.util.concurrent.*;
+import org.apache.logging.log4j.*;
+import us.exultant.wantfast.*;
+import us.exultant.wantfast.thruster.api.*;
 import co.paralleluniverse.fibers.*;
 import co.paralleluniverse.fibers.io.*;
 import co.paralleluniverse.strands.*;
 
-public class QuasarServer {
+public class QuasarServer implements Server {
 	// see FibersMXBean and/or implmenting a FibersMonitor for inspection of schedulers.
 	// see FiberExecutorScheduler for using existing/legacy executor pools instead of new FJPools.
 
 	// https://github.com/puniverse/quasar/blob/master/quasar-core/src/test/java/co/paralleluniverse/fibers/io/FiberAsyncIOTest.java
 	// https://github.com/puniverse/quasar/blob/master/quasar-core/src/test/java/co/paralleluniverse/strands/StrandsBenchmark.java
 
-	FiberScheduler scheduler = new FiberForkJoinScheduler("test", 4, null, false);
+	public static final Logger log = LogManager.getLogger(QuasarServer.class);
 
-	private static final int PORT = 1234;
-
-	public static void main(String... args) throws Exception {
-		new QuasarServer().testFiberAsyncSocket();
+	public QuasarServer(FiberScheduler scheduler) {
+		this.scheduler = scheduler;
 	}
 
-	public void testFiberAsyncSocket() throws Exception {
-		final Fiber<Void> server = new Fiber<Void>(scheduler, new SuspendableRunnable() {
+	@Override
+	public void configure(ThrusterConfig cfg) {
+		port = cfg.get(ThrusterConfig.Options.PORT);
+	}
+
+	private final FiberScheduler scheduler;
+	private int port;
+
+	private Fiber<Void> fiber;
+
+	public void connect() throws IOException {}
+
+	public void serve() {
+		fiber = new Fiber<Void>(scheduler, new SuspendableRunnable() {
 			@Override
 			public void run() throws SuspendExecution {
 				try (
-					FiberServerSocketChannel socket = FiberServerSocketChannel.open().bind(new InetSocketAddress(PORT));
-					FiberSocketChannel ch = socket.accept()
+					FiberServerSocketChannel socket = FiberServerSocketChannel.open().bind(new InetSocketAddress(port));
+					FiberSocketChannel ch = socket.accept();
 				) {
 					ByteBuffer headerBuf = ByteBuffer.allocateDirect(4);
 					ByteBuffer msgBuf = ByteBuffer.allocateDirect(1024 * 1024);
@@ -69,15 +83,10 @@ public class QuasarServer {
 					throw new RuntimeException(e);
 				}
 			}
-		});
+		}).start();
+	}
 
-		final QuasarClient client = new QuasarClient(scheduler);
-
-		server.start();
-		Thread.sleep(100);
-		client.ping();
-
-		client.join();
-		server.join();
+	public void join() throws ExecutionException, InterruptedException {
+		fiber.join();
 	}
 }

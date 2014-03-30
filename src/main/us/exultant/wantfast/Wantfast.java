@@ -4,19 +4,20 @@ import java.io.*;
 import org.apache.logging.log4j.*;
 import us.exultant.wantfast.thruster.api.*;
 import us.exultant.wantfast.thruster.naive.*;
-import us.exultant.wantfast.thruster.quasar.*;
 
 public class Wantfast {
 	public static final Logger log = LogManager.getLogger(Wantfast.class);
 
+	public static final ThrusterConfig default_cfg = new ThrusterConfig();
+	static {
+		default_cfg.put(ThrusterConfig.Options.PORT, 10010);
+	}
+
 	public static void main(String... args) throws Exception {
 		log.info("Hello, world.");
 
-		QuasarServer.main(args);
+		us.exultant.wantfast.thruster.quasar.Main.main(args);
 
-//		ThrusterConfig cfg = new ThrusterConfig();
-//		cfg.put(ThrusterConfig.Options.PORT, 10010);
-//
 //		Server server = new NaiveBlockingServer();
 //		server.configure(cfg);
 //		server.connect();
