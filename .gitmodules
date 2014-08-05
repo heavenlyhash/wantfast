@@ -73,3 +73,9 @@
 	mdm = dependency
 	mdm-version = 5.0.3.mvn
 	update = none
+[submodule "lib/kryo"]
+	path = lib/kryo
+	url = http://mdm-releases.com/com.esotericsoftware.kryo/kryo-releases/.git
+	mdm = dependency
+	mdm-version = 2.24.0.mvn
+	update = none
