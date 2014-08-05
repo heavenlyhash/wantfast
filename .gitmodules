@@ -59,7 +59,7 @@
 	path = lib/asm-util
 	url = http://mdm-releases.com/org.ow2.asm/asm-util-releases.git
 	mdm = dependency
-	mdm-version = 4.2.mvn
+	mdm-version = 5.0.3.mvn
 	update = none
 [submodule "lib/guava"]
 	path = lib/guava
