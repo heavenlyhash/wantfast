@@ -53,7 +53,7 @@
 	path = lib/asm-analysis
 	url = http://mdm-releases.com/org.ow2.asm/asm-analysis-releases.git
 	mdm = dependency
-	mdm-version = 4.2.mvn
+	mdm-version = 5.0.3.mvn
 	update = none
 [submodule "lib/asm-util"]
 	path = lib/asm-util
