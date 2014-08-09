@@ -100,6 +100,7 @@
 		>
 		<java
 			classname="us.exultant.wantfast.Wantfast"
+                        fork="true"
 			>
 			<sysproperty key="co.paralleluniverse.fibers.verifyInstrumentation" value="true" />
 			<classpath refid="app.path.main.runtime"/>
