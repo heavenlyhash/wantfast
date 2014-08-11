@@ -120,6 +120,7 @@
 				<attribute name="Main-Class" value="us.exultant.wantfast.Wantfast"/>
 			</manifest>
 			<fileset file="${target.javac}/main/**"/>
+			<fileset file="${src}/conf/**"/>
 		</exusPack>
 		<chmod file="${dist}/${app}.jar" perm="755"/>
 	</target>
