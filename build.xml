@@ -112,7 +112,10 @@
 		depends="compile"
 		description="pack distributable artifacts"
 		>
-		<exusPack destfile="${dist}/${app}.jar">
+		<exusPack
+			destfile="${dist}/${app}.jar"
+			rezip-refid="app.path.main.runtime"
+			>
 			<manifest>
 				<attribute name="Main-Class" value="us.exultant.wantfast.Wantfast"/>
 			</manifest>
